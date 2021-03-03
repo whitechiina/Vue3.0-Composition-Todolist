@@ -1,8 +1,12 @@
 <template>
     <div>
         <div class="input-add">
-            <input v-model="newcontent" type="text" name="tido" />
-            <button @click="add">
+            <input 
+                v-model="todoContent" 
+                type="text" 
+                name="todo"
+                @keyup.enter="emitAddTodo" />
+            <button @click="emitAddTodo">
                 <i class="plus"></i>
             </button>
         </div>
@@ -10,8 +14,27 @@
 </template>
 
 <script>
+    import { ref } from 'vue'
     export default {
-        name: 'TodoAdd'
+        name: 'TodoAdd',
+        setup(props, context) {
+            const todoContent = ref('');
+            // 处理函数
+            const emitAddTodo = () => {
+                const todo = {
+                    id: props.tid,
+                    content: todoContent.value,
+                    completed: false
+                };
+                context.emit('add-todo', todo);
+                todoContent.value = '';
+            }
+
+            return {
+                todoContent,
+                emitAddTodo
+            }
+        }
     }
 </script>
 

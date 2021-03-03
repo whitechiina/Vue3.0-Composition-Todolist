@@ -1,8 +1,12 @@
 <template>
     <div class="todo-item">
         <label>
-            <input type="checkout" />
-            Todo1
+            <input 
+                type="checkout" 
+                :checked="todoItem.templeted"
+                @click="$emit('change-state', $event)"
+            />
+            {{ todoItem.content }}
             <span class="check-botton"></span>
         </label>
     </div>
@@ -10,7 +14,8 @@
 
 <script>
 export default {
-    name: 'TodolistItem'
+    name: 'TodolistItem',
+    props: ['todoItem']
 }
 </script>
 
@@ -60,10 +65,14 @@ export default {
   opacity: 0;
 }
 
-.todo-item input {
+.todo-item label input {
   width: 20px;
   margin-right: 16px;
   opacity: 0;
+}
+
+.todo-item label span {
+  color: blue;
 }
 
 .todo-item input:checked + span.check-button::after {

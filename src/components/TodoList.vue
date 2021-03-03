@@ -1,6 +1,11 @@
 <template>
-    <div class="list">
-        <todolist-item v-for="(item,index) in todolist" :key="index"></todolist-item>
+    <div class="todo-list">
+        <todolist-item 
+            v-for="todo in todos"
+            :key="todo.id" 
+            :todo-item="todo"
+            @change-state="todo.completed = $event.target.checked"
+            ></todolist-item>
     </div>
 </template>
 
@@ -8,14 +13,8 @@
     import TodolistItem from './TodoListItem.vue';
     export default {
         name: 'TodoList',
-        data() {
-            return {
-                todolist: ['测试1', '测试2', '测试3']
-            }
-        },
-        components: {
-            TodolistItem
-        }
+        components: { TodolistItem },
+        props: ['todos']
     }
 </script>
 
