@@ -1,22 +1,19 @@
 <template>
-    <div class="todo-item">
-        <label>
-            <input 
-                type="checkout" 
-                :checked="todoItem.templeted"
-                @click="$emit('change-state', $event)"
-            />
-            {{ todoItem.content }}
-            <span class="check-botton"></span>
-        </label>
-    </div>
+  <div class="todo-item" :class="{ done: todoItem.completed }">
+    <label>
+      <input
+        type="checkbox"
+        :checked="todoItem.completed"
+        @click="$emit('change-state', $event)"
+      />
+      {{ todoItem.content }}
+      <span class="check-button"></span>
+    </label>
+  </div>
 </template>
 
 <script>
-export default {
-    name: 'TodolistItem',
-    props: ['todoItem']
-}
+export default { name: "TodoListItem", props: ["todoItem"] };
 </script>
 
 <style>
@@ -65,14 +62,9 @@ export default {
   opacity: 0;
 }
 
-.todo-item label input {
-  width: 20px;
+.todo-item input {
   margin-right: 16px;
   opacity: 0;
-}
-
-.todo-item label span {
-  color: blue;
 }
 
 .todo-item input:checked + span.check-button::after {

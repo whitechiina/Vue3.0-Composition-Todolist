@@ -1,11 +1,7 @@
 <template>
     <div>
         <div class="input-add">
-            <input 
-                v-model="todoContent" 
-                type="text" 
-                name="todo"
-                @keyup.enter="emitAddTodo" />
+            <input v-model="todoContent" type="text" name="todo" @keyup.enter="emitAddTodo" />
             <button @click="emitAddTodo">
                 <i class="plus"></i>
             </button>
@@ -14,27 +10,33 @@
 </template>
 
 <script>
-    import { ref } from 'vue'
+    import {
+        ref
+    } from 'vue'
     export default {
         name: 'TodoAdd',
         setup(props, context) {
-            const todoContent = ref('');
-            // 处理函数
-            const emitAddTodo = () => {
-                const todo = {
-                    id: props.tid,
-                    content: todoContent.value,
-                    completed: false
-                };
-                context.emit('add-todo', todo);
-                todoContent.value = '';
-            }
-
-            return {
-                todoContent,
-                emitAddTodo
-            }
+            return useEmitAddTodo(props.tid, context.emit);
         }
+    };
+
+    // TodoAdd 组件专属 Composable
+    function useEmitAddTodo(tid, emit) {
+        const todoContent = ref("");
+        const emitAddTodo = () => {
+            const todo = {
+                id: tid,
+                content: todoContent.value,
+                completed: false,
+            };
+            emit("add-todo", todo);
+            todoContent.value = "";
+        };
+
+        return {
+            todoContent,
+            emitAddTodo,
+        };
     }
 </script>
 
